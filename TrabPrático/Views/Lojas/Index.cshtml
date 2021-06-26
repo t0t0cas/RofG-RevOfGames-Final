@@ -8,10 +8,12 @@
     <img style=" width: 280px; height: 60px; object-fit:fill;" src="~/fotosjogos/logoLojas.png"
          title="Lista de Jogos" />
 </div>
-
-<p>
+@if (User.IsInRole("Gestor")) { 
+    <p>
     <a class="textoCor" style="margin-bottom: 10px" asp-action="Create">Adicionar Novo</a>
-</p>
+    </p>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -28,7 +30,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+       @foreach (var item in Model) {
         <tr>
             <td style="color: white">
                 <a style="color: white"> @Html.DisplayFor(modelItem => item.Nome) </a>
@@ -43,9 +45,14 @@
                                                                                         title="@Html.DisplayFor(modelItem => item.Nome)" /></a>    
             </td>
             <td>
-                <a hidden class="textoCor" asp-action="Edit" asp-route-id="@item.IdLoja">Editar</a> |
-                <a hidden class="textoCor" asp-action="Details" asp-route-id="@item.IdLoja">Detalhes</a> |
-                <a hidden class="textoCor" asp-action="Delete" asp-route-id="@item.IdLoja">Eliminar</a>
+                 @if(User.IsInRole("Gestor"))
+                  {
+                    <div>
+                    <a class="textoCor" asp-action="Edit" asp-route-id="@item.IdLoja">Editar</a> |
+                    <a class="textoCor" asp-action="Details" asp-route-id="@item.IdLoja">Detalhes</a> |
+                    <a class="textoCor" asp-action="Delete" asp-route-id="@item.IdLoja">Eliminar</a>
+                    </div>
+                  }
             </td>
         </tr>
 }
