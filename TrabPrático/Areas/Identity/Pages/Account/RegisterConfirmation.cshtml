@@ -1,0 +1,21 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Register confirmation";
+}
+
+<h1 style="color:white">Confirmação de Registo</h1>
+@{
+    if (@Model.DisplayConfirmAccountLink)
+    {
+<p style="color:white">
+    Esta app atualmente não possui um verdadeiro sistema de envio de emails registado.
+</p>
+    }
+    else
+    {
+<p style="color:white">
+    Por favor, verifique o Email para confirmar a conta.
+</p>
+    }
+}

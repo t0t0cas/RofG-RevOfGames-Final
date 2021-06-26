@@ -1,0 +1,35 @@
+﻿@model IEnumerable<TrabPrático.Models.Jogos>
+
+@{
+    ViewData["Title"] = "Index";
+
+}
+<head>
+    <link rel="stylesheet" href="~/css/ImagensJogos.css" />
+</head>
+
+<div style=" text-align: center; border-top: 20px solid transparent">
+    <img style=" width: 400px; height: 70px; object-fit:fill;" src="~/fotosjogos/logoJogos.png"
+         title="Lista de Jogos" />
+</div>
+
+<p>
+    <a class="textoCor" asp-action="Create">Adicionar Novo</a>
+    <div style="border-top: 2px solid transparent">
+    <hr style="background-color: white"/>
+    </div>
+</p>
+
+@foreach (var item in Model)
+{
+    <div class="Jogo">
+        <a asp-action="Details" asp-route-id="@item.IdJogo">
+            <img class="ImagemJogo" src="~/fotosjogos/@Html.DisplayFor(modelItem => item.Imagem)" />
+            <div class="overlay">
+                <div class="text">
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </div>
+            </div>
+        </a>
+    </div>
+}

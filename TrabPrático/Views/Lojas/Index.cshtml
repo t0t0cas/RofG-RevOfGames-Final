@@ -1,0 +1,53 @@
+﻿@model IEnumerable<TrabPrático.Models.Loja>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div style=" text-align: center; border-top: 20px solid transparent; border-bottom: 20px solid transparent">
+    <img style=" width: 280px; height: 60px; object-fit:fill;" src="~/fotosjogos/logoLojas.png"
+         title="Lista de Jogos" />
+</div>
+
+<p>
+    <a class="textoCor" style="margin-bottom: 10px" asp-action="Create">Adicionar Novo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a style="color: white">Nome da Loja</a>
+            </th>
+            <th>
+                <a style="color: white">Nome do Jogo</a>
+            </th>
+            <th style="text-align: center">
+                <a style="color: white">Site da Loja</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td style="color: white">
+                <a style="color: white"> @Html.DisplayFor(modelItem => item.Nome) </a>
+            </td>
+            <td>
+                <a style="color: white"> @Html.DisplayFor(modelItem => item.Jogo.Nome) </a>
+            </td>
+            <td style="text-align: center">
+                <a href="@Html.DisplayFor(modelItem => item.Link)" ><img src="~/fotoloja/@Html.DisplayFor(modelItem => item.ImagemLoja) "
+                                                                                        width="150"
+                                                                                        alt="Fotografia do @Html.DisplayFor(modelItem => item.Nome)"
+                                                                                        title="@Html.DisplayFor(modelItem => item.Nome)" /></a>    
+            </td>
+            <td>
+                <a hidden class="textoCor" asp-action="Edit" asp-route-id="@item.IdLoja">Editar</a> |
+                <a hidden class="textoCor" asp-action="Details" asp-route-id="@item.IdLoja">Detalhes</a> |
+                <a hidden class="textoCor" asp-action="Delete" asp-route-id="@item.IdLoja">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
