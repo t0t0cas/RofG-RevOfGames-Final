@@ -15,7 +15,9 @@ namespace TrabPrático.Controllers
 
     public class JogosController : Controller
     {
+        //Contéudo da base de dados
         private readonly ApplicationDbContext _context;
+        
         private readonly UserManager<IdentityUser> _userManager;
 
         public JogosController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
@@ -37,9 +39,10 @@ namespace TrabPrático.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateComment(int jogoId, double nota, string comentario)
         {
-
+            //variável que vai buscar o Utilizador que escreveu a Review
             var utilizador = _context.Utilizador.Where(u => u.UserNameID == _userManager.GetUserId(User)).FirstOrDefault();
             
+            //Colocar nos dados da Review os daods introduzidos pelo Utilizador
             var review = new Review {
                 JogoFK = jogoId,
                 NotaReview = nota,
@@ -48,8 +51,10 @@ namespace TrabPrático.Controllers
                 Visivel = true,
                 Utilizador = utilizador
             };
-
+            
+            //Adiciona a base de dados a review
             _context.Add(review);
+            //Guarda as alterações feitas na base de dados
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Details), new { id = jogoId});
         }

@@ -29,6 +29,7 @@ namespace TrabPrático.Controllers.API
         [HttpGet]
         public async Task<ActionResult<IEnumerable<JogosAPIViewModel>>> GetJogos()
         {
+            //Variável que vai listar os jogos existentes na BD
             var listaJogos = await _context.Jogos
                                  .Select(j => new JogosAPIViewModel { 
                                          IdJogo = j.IdJogo,

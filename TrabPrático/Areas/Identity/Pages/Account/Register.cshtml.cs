@@ -111,16 +111,16 @@ namespace TrabPrático.Areas.Identity.Pages.Account
 
 
                     //*************************************************************
-                    // Vamos proceder à operação de guardar os dados do Criador
+                    // Vamos proceder à operação de guardar os dados do Utilizador
                     //*************************************************************
-                    // preparar os dados do Criador para serem adicionados à BD
-                    // atribuir ao objeto 'criador' o email fornecido pelo utilizador,
+                    // preparar os dados do Utilizador para serem adicionados à BD
+                    // atribuir ao objeto 'Utilizador' o email fornecido pelo utilizador,
                     // a quando da escreita dos dados na interface
                     // exatamente a mesma tarefa feita na linha 128
 
                     // adicionar o ID do utilizador,
                     // para formar uma 'ponte' (foreign key) entre
-                    // os dados da autenticação e os dados do 'negócio'
+                    // os dados da autenticação 
 
 
                     // estamos em condições de guardar os dados na BD
@@ -132,6 +132,7 @@ namespace TrabPrático.Areas.Identity.Pages.Account
                         UserNameID = user.Id
                     };
 
+                    //Verifica se o email colocado é do gestor e se for coloca essa conta como gestor, caso contrário colocado a conta como cliente
                     if (Input.Email == "gestor@ipt.pt")
                     {
                         await _userManager.AddToRoleAsync(user, "Gestor");
@@ -150,7 +151,7 @@ namespace TrabPrático.Areas.Identity.Pages.Account
 
                         await _context.AddAsync(utilizador);
                         await _context.SaveChangesAsync(); // 'commit' da adição
-                                                           // Enviar para o utilizador para a página de confirmação da criaçao de Registo
+                        // Enviar para o utilizador para a página de confirmação da criaçao de Registo
                         return RedirectToPage("RegisterConfirmation");
                     }
                     catch (Exception)
