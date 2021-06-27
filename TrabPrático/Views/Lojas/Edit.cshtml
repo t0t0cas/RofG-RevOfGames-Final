@@ -1,8 +1,7 @@
 ﻿@model TrabPrático.Models.Loja
 
 @{
-    ViewData["Title"] = "Edit";
-}
+    ViewData["Title"] = "Edit";}
 
 <h1>Edit</h1>
 
@@ -10,26 +9,27 @@
 <hr style=" background-color: white" />
 <div class="row">
     <div class="col-md-4">
+        @if (User.IsInRole("Gestor")) { 
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="IdLoja" />
             <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
+                <label style="color:white" asp-for="Nome" class="control-label"></label>
                 <input asp-for="Nome" class="form-control" />
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ImagemLoja" class="control-label"></label>
+                <label style="color:white" asp-for="ImagemLoja" class="control-label"></label>
                 <input asp-for="ImagemLoja" class="form-control" />
                 <span asp-validation-for="ImagemLoja" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Link" class="control-label"></label>
+                <label style="color:white" asp-for="Link" class="control-label"></label>
                 <input asp-for="Link" class="form-control" />
                 <span asp-validation-for="Link" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="JogoFK" class="control-label"></label>
+                <label style="color:white" asp-for="JogoFK" class="control-label"></label>
                 <select asp-for="JogoFK" class="form-control" asp-items="ViewBag.JogoFK"></select>
                 <span asp-validation-for="JogoFK" class="text-danger"></span>
             </div>
@@ -37,6 +37,7 @@
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
+        }
     </div>
 </div>
 

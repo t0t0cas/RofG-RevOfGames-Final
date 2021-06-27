@@ -1,51 +1,51 @@
 ﻿@model TrabPrático.Models.Loja
 
-@{
-    ViewData["Title"] = "Delete";
-}
+@{ ViewData["Title"] = "Delete"; }
 
 <div style=" text-align: center; border-top: 15px solid transparent">
     <img style=" width: 380px; height: 70px; object-fit:fill;" src="~/fotosjogos/logoEliminar.png"
          title="Eliminar" />
 </div>
+@if (User.IsInRole("Gestor")) {
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2" style="object-fit: fill; color: white">
+                @Html.DisplayNameFor(model => model.Nome)
+            </dt>
+            <dd class="col-sm-10" style="object-fit: fill; color: white">
+                @Html.DisplayFor(model => model.Nome)
+            </dd>
+            <dt class="col-sm-2" style="object-fit: fill; color: white">
+                @Html.DisplayNameFor(model => model.ImagemLoja)
+            </dt>
+            <dd class="col-sm-10">
+                <a href="@Html.DisplayFor(model => model.Link)">
+                    <img src="~/fotoloja/@Html.DisplayFor(model => model.ImagemLoja) "
+                         width="150"
+                         alt="Fotografia do @Html.DisplayFor(model => model.Nome)"
+                         title="@Html.DisplayFor(model => model.Nome)" />
+                </a>
+            </dd>
+            <dt class="col-sm-2" style="object-fit: fill; color: white">
+                @Html.DisplayNameFor(model => model.Link)
+            </dt>
+            <dd class="col-sm-10" style="object-fit: fill; color: white">
+                <a style="color: #64fcfc" href="@Html.DisplayFor(model => model.Link)">@Html.DisplayFor(model => model.Link)</a>
+            </dd>
+            <dt class="col-sm-2" style="object-fit: fill; color: white">
+                @Html.DisplayNameFor(model => model.Jogo)
+            </dt>
+            <dd class="col-sm-10" style="object-fit: fill; color: white">
+                @Html.DisplayFor(model => model.Jogo.IdJogo)
+            </dd>
 
-<div>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2" style="object-fit: fill; color: white">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class = "col-sm-10" style="object-fit: fill; color: white">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt class = "col-sm-2" style="object-fit: fill; color: white">
-            @Html.DisplayNameFor(model => model.ImagemLoja)
-        </dt>
-        <dd class = "col-sm-10">
-            <a href="@Html.DisplayFor(model => model.Link)">
-                <img src="~/fotoloja/@Html.DisplayFor(model => model.ImagemLoja) "
-                     width="150"
-                     alt="Fotografia do @Html.DisplayFor(model => model.Nome)"
-                     title="@Html.DisplayFor(model => model.Nome)" />
-            </a>
-        </dd>
-        <dt class = "col-sm-2" style="object-fit: fill; color: white">
-            @Html.DisplayNameFor(model => model.Link)
-        </dt>
-        <dd class = "col-sm-10"  style="object-fit: fill; color: white">
-            <a style="color: #64fcfc" href="@Html.DisplayFor(model => model.Link)">@Html.DisplayFor(model => model.Link)</a>
-        </dd>
-        <dt class = "col-sm-2"  style="object-fit: fill; color: white">
-            @Html.DisplayNameFor(model => model.Jogo)
-        </dt>
-        <dd class = "col-sm-10"  style="object-fit: fill; color: white">
-            @Html.DisplayFor(model => model.Jogo.IdJogo)
-        </dd class>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="IdLoja" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a class="textoCor" asp-action="Index">Voltar á lista</a>
-    </form>
-</div>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="IdLoja" />
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a class="textoCor" asp-action="Index">Voltar á lista</a>
+        </form>
+    </div>
+}

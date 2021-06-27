@@ -8,42 +8,43 @@
     <img style=" width: 380px; height: 70px; object-fit:fill;" src="~/fotosjogos/logoDetalhes.png"
          title="Detalhes" />
 </div>
-
-<div>
-    <hr style=" background-color: white" />
-    <dl class="row">
-        <dt class="col-sm-2" style="object-fit: fill; color: white">
-            <a>Nome da Loja</a>
-        </dt>
-        <dd class="col-sm-10"  style="object-fit: fill; color: white">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt class="col-sm-2" style="object-fit: fill; color: white">
-            <a>Nome do Jogo</a>
-        </dt>
-        <dd class="col-sm-10"  style="object-fit: fill; color: white">
-            @Html.DisplayFor(model => model.Jogo.Nome)
-        </dd>
-        <dt class="col-sm-2" style="object-fit: fill; color: white">
-            @Html.DisplayNameFor(model => model.Link)
-        </dt>
+@if (User.IsInRole("Gestor")) { 
+    <div>
+        <hr style=" background-color: white" />
+        <dl class="row">
+            <dt class="col-sm-2" style="object-fit: fill; color: white">
+                <a>Nome da Loja</a>
+            </dt>
             <dd class="col-sm-10"  style="object-fit: fill; color: white">
-                <a style="color: #64fcfc" href="@Html.DisplayFor(model => model.Link)">@Html.DisplayFor(model => model.Link)</a>
+                @Html.DisplayFor(model => model.Nome)
             </dd>
-        <dt class="col-sm-2" style="object-fit: fill; color: white">
-            <a>Logo da Loja</a>
-        </dt>
-        <dd class="col-sm-10">
-            <a href="@Html.DisplayFor(model => model.Link)">
-                <img src="~/fotoloja/@Html.DisplayFor(model => model.ImagemLoja) "
-                    width="150"
-                    alt="Fotografia do @Html.DisplayFor(model => model.Nome)"
-                    title="@Html.DisplayFor(model => model.Nome)" />
-            </a>
-        </dd>
-    </dl>
-</div>
-<div>
-    <a hidden class="textoCor" style="object-fit: fill; color: white" asp-action="Edit" asp-route-id="@Model.IdLoja">Editar</a> |
-    <a class="textoCor" asp-action="Index">Voltar à lista</a>
-</div>
+            <dt class="col-sm-2" style="object-fit: fill; color: white">
+                <a>Nome do Jogo</a>
+            </dt>
+            <dd class="col-sm-10"  style="object-fit: fill; color: white">
+                @Html.DisplayFor(model => model.Jogo.Nome)
+            </dd>
+            <dt class="col-sm-2" style="object-fit: fill; color: white">
+                @Html.DisplayNameFor(model => model.Link)
+            </dt>
+                <dd class="col-sm-10"  style="object-fit: fill; color: white">
+                    <a style="color: #64fcfc" href="@Html.DisplayFor(model => model.Link)">@Html.DisplayFor(model => model.Link)</a>
+                </dd>
+            <dt class="col-sm-2" style="object-fit: fill; color: white">
+                <a>Logo da Loja</a>
+            </dt>
+            <dd class="col-sm-10">
+                <a href="@Html.DisplayFor(model => model.Link)">
+                    <img src="~/fotoloja/@Html.DisplayFor(model => model.ImagemLoja) "
+                        width="150"
+                        alt="Fotografia do @Html.DisplayFor(model => model.Nome)"
+                        title="@Html.DisplayFor(model => model.Nome)" />
+                </a>
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a hidden class="textoCor" style="object-fit: fill; color: white" asp-action="Edit" asp-route-id="@Model.IdLoja">Editar</a> |
+        <a class="textoCor" asp-action="Index">Voltar à lista</a>
+    </div>
+}
