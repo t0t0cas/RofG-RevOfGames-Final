@@ -1,11 +1,12 @@
 ﻿@model TrabPrático.Models.Jogos
 
-@{
-    ViewData["Title"] = "Edit";}
+@{ ViewData["Title"] = "Edit"; }
 
-<h1 style="color:white">Edit</h1>
+<div style=" text-align: center; border-top: 20px solid transparent">
+    <img style=" width: 380px; height: 70px; object-fit:fill;" src="~/fotosjogos/logoEditar.png"
+         title="Lista de Jogos" />
+</div>
 
-<h4 style="color:white">Jogos</h4>
 <hr style=" background-color: white" />
 <div class="row">
     <div class="col-md-4">
@@ -41,7 +42,7 @@
             </div>
             <div class="form-group">
                 <label style="color:white" asp-for="Imagem" class="control-label"></label>
-                <input asp-for="Imagem" class="form-control" />
+                <input type="file" name="Imagem" accept=".jpg,.jpeg,.png" style=" color: #64fcfc;" />
                 <span asp-validation-for="Imagem" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -50,12 +51,12 @@
                 <span asp-validation-for="Descricao" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-                <label asp-for="Media" class="control-label"></label>
-                <input asp-for="Media" class="form-control" />
-                <span asp-validation-for="Media" class="text-danger"></span>
-            </div>*@
+                    <label asp-for="Media" class="control-label"></label>
+                    <input asp-for="Media" class="form-control" />
+                    <span asp-validation-for="Media" class="text-danger"></span>
+                </div>*@
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>
         </form>
         }
@@ -63,7 +64,7 @@
 </div>
 
 <div>
-    <a class="textoCor" asp-action="Index">Voltar à lista</a>
+    <a class="textoCor" asp-action="Index">Voltar á lista</a>
 </div>
 
 @section Scripts {

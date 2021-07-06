@@ -4,51 +4,59 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<div style=" text-align: center; border-top: 15px solid transparent">
+    <img style=" width: 380px; height: 70px; object-fit:fill;" src="~/fotosjogos/logoDetalhes.png"
+         title="Detalhes" />
+</div>
 
 <div>
-    <h4>Review</h4>
-    <hr />
+    <hr style=" background-color: white" />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NotaReview)
+        <dt class="col-sm-2" style="object-fit: fill; color: white">
+            <a>Jogo</a>
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NotaReview)
+        <dd class="col-sm-10">
+            <div>
+                <img style=" object-fit:fill;" src="~/fotosjogos/@Html.DisplayFor(model => model.Jogo.Imagem) "
+                     width="150"
+                     alt="Fotografia do @Html.DisplayFor(model => model.Jogo.Nome)"
+                     title="@Html.DisplayFor(model => model.Jogo.Nome)" />
+            </div>
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Comentario)
+        <dt class="col-sm-2" style="object-fit: fill; color: white">
+            <a>Utilizador</a>
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Comentario)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DataReview)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DataReview)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Visivel)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Visivel)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Utilizador)
-        </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10" style="object-fit: fill; color: white">
             @Html.DisplayFor(model => model.Utilizador.Email)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Jogo)
+        <dt class="col-sm-2" style="object-fit: fill; color: white">
+            <a>Nota</a>
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Jogo.IdJogo)
+        <dd class="col-sm-10" style="object-fit: fill; color: white">
+            @Html.DisplayFor(model => model.NotaReview)
+        </dd>
+        <dt class="col-sm-2" style="object-fit: fill; color: white">
+            <a>Comentário</a>
+        </dt>
+        <dd class="col-sm-10" style="object-fit: fill; color: white">
+            @Html.DisplayFor(model => model.Comentario)
+        </dd>
+        <dt class="col-sm-2" style="object-fit: fill; color: white">
+            <a>Visivel</a>
+        </dt>
+        <dd class="col-sm-10" style="object-fit: fill; color: white">
+            @Html.DisplayFor(model => model.Visivel)
+        </dd>
+        <dt class="col-sm-2" style="object-fit: fill; color: white">
+            <a>Data</a>
+        </dt>
+        <dd class="col-sm-10" style="object-fit: fill; color: white">
+            @Html.DisplayFor(model => model.DataReview)
         </dd>
     </dl>
 </div>
+
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.IdReview">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.IdReview">Editar</a> |
+    <a asp-action="Index">Voltar á lista</a>
 </div>

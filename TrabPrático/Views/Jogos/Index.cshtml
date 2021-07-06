@@ -5,19 +5,16 @@
     <link rel="stylesheet" href="~/css/ImagensJogos.css" />
 </head>
 
-<div style=" text-align: center; border-top: 20px solid transparent">
-    <img style=" width: 400px; height: 70px; object-fit:fill;" src="~/fotosjogos/logoJogos.png"
-         title="Lista de Jogos" />
-</div>
+<h1 style="color: white">Index</h1>
+
 @if (User.IsInRole("Gestor"))
 {
-    <p>
-        <a class="textoCor" asp-action="Create">Adicionar Novo</a>
-        <div style="border-top: 2px solid transparent">
-            <hr style="background-color: white" />
-        </div>
-    </p>
-}
+<p>
+    <a class="textoCor" asp-action="Create">Adicionar Novo</a>
+    <div style="border-top: 2px solid transparent">
+        <hr style="background-color: white" />
+    </div>
+</p>}
 
 
 @foreach (var item in Model)

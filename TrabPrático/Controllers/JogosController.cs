@@ -32,57 +32,63 @@ namespace TrabPrático.Controllers
             return View(await _context.Jogos.ToListAsync());
         }
 
+        // POST: Jogos/CreateComment
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateComment(int jogoId, string comentario)
+        {
+
+            //variável que vai buscar o Utilizador que escreveu a Review
+            var utilizador = _context.Utilizador.Where(u => u.UserNameID == _userManager.GetUserId(User)).FirstOrDefault();
+
+            //Colocar nos dados da Review os daods introduzidos pelo Utilizador
+            var review = new Review
+            {
+                NotaReview = 0,
+                Comentario = comentario,
+                DataReview = DateTime.Now,
+                Visivel = true,
+                Utilizador = utilizador,
+                JogoFK = jogoId
+            };
+
+            //Adiciona a base de dados a review
+            _context.Add(review);
+            //Guarda as alterações feitas na base de dados
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Details), new { id = jogoId });
+        }
+
         // POST: Jogos/CreateRating
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateComment(int jogoId, double nota, string comentario)
+        public async Task<IActionResult> CreateRating(int jogoId, double nota)
         {
+
             //variável que vai buscar o Utilizador que escreveu a Review
             var utilizador = _context.Utilizador.Where(u => u.UserNameID == _userManager.GetUserId(User)).FirstOrDefault();
-            
+
             //Colocar nos dados da Review os daods introduzidos pelo Utilizador
-            var review = new Review {
-                JogoFK = jogoId,
+            var review = new Review
+            {
                 NotaReview = nota,
-                Comentario = comentario,
+                Comentario = "0",
                 DataReview = DateTime.Now,
                 Visivel = true,
-                Utilizador = utilizador
+                Utilizador = utilizador,
+                JogoFK = jogoId
             };
-            
+
             //Adiciona a base de dados a review
             _context.Add(review);
-            //Guarda as alterações feitas na base de dados
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Details), new { id = jogoId});
+            //Guarda as alterações feitas na base de dados
+            return RedirectToAction(nameof(Details), new { id = jogoId });
         }
-
-        // POST: Jogos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> CreateComment(int jogoId, string comentario)
-        //{
-
-        //    var utilizador = _context.Utilizador.Where(u => u.UserNameID == _userManager.GetUserId(User)).FirstOrDefault();
-
-        //    var comment = new Review
-        //    {
-        //        JogoFK = jogoId,
-        //        Comentario = comentario,
-        //        DataReview = DateTime.Now,
-        //        IdReview = 0,
-        //        Visivel = true,
-        //        Utilizador = utilizador
-        //    };
-
-        //    _context.Add(comment);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Details), new { id = jogoId });
-        //}
 
 
         // GET: Jogos/Details/5

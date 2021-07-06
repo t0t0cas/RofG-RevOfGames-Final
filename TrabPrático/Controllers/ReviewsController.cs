@@ -85,6 +85,7 @@ namespace TrabPrático.Controllers
             {
                 return NotFound();
             }
+
             ViewData["JogoFK"] = new SelectList(_context.Jogos, "IdJogo", "IdJogo", review.JogoFK);
             ViewData["UtilizadorFK"] = new SelectList(_context.Utilizador, "IdUtilizador", "Email", review.UtilizadorFK);
             return View(review);
@@ -120,7 +121,7 @@ namespace TrabPrático.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), "Jogos", new { id = review.JogoFK});
             }
             ViewData["JogoFK"] = new SelectList(_context.Jogos, "IdJogo", "IdJogo", review.JogoFK);
             ViewData["UtilizadorFK"] = new SelectList(_context.Utilizador, "IdUtilizador", "Email", review.UtilizadorFK);
@@ -155,7 +156,16 @@ namespace TrabPrático.Controllers
             var review = await _context.Review.FindAsync(id);
             _context.Review.Remove(review);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            if (User.IsInRole("Gestor"))
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return RedirectToAction(nameof(Details), "Jogos", new { id = review.JogoFK });
+            }
+
         }
 
         private bool ReviewExists(int id)

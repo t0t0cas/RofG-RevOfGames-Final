@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Create";}
 
-<h1 style="color:white">Create</h1>
+<h1 style="color:white">Criar</h1>
 
 <h4 style="color:white">Loja</h4>
 <hr />
@@ -20,7 +20,7 @@
                 </div>
                 <div class="form-group">
                     <label style="color:white" asp-for="ImagemLoja" class="control-label"></label>
-                    <input asp-for="ImagemLoja" class="form-control" />
+                    <input type="file" name="ImagemLoja" accept=".jpg,.jpeg,.png" style=" color: #64fcfc;" />
                     <span asp-validation-for="ImagemLoja" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -40,7 +40,7 @@
     </div>
 
     <div>
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index">Voltar á lista</a>
     </div>
 
     @section Scripts {

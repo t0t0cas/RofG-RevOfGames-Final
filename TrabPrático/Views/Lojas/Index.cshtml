@@ -4,10 +4,8 @@
     ViewData["Title"] = "Index";
 }
 
-<div style=" text-align: center; border-top: 20px solid transparent; border-bottom: 20px solid transparent">
-    <img style=" width: 280px; height: 60px; object-fit:fill;" src="~/fotosjogos/logoLojas.png"
-         title="Lista de Jogos" />
-</div>
+<h1>Index</h1>
+
 @if (User.IsInRole("Gestor")) { 
     <p>
     <a class="textoCor" style="margin-bottom: 10px" asp-action="Create">Adicionar Novo</a>

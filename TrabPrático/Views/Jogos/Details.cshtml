@@ -51,14 +51,14 @@
                 </div> }
             else if (Model.Nota >= 75 && Model.Nota < 90)
             {
-            <div style="height: 24px; width: 35px; text-align: center; background-color: greenyellow">
-                @Html.DisplayFor(model => model.Nota)
-            </div> }
+                <div style="height: 24px; width: 35px; text-align: center; background-color: greenyellow">
+                    @Html.DisplayFor(model => model.Nota)
+                </div> }
             else if (Model.Nota >= 90)
             {
-            <div style="height: 24px; width: 35px; text-align: center; background-color: green">
-                @Html.DisplayFor(model => model.Nota)
-            </div>            }
+                <div style="height: 24px; width: 35px; text-align: center; background-color: green">
+                    @Html.DisplayFor(model => model.Nota)
+                </div>}
         </dd>
         <dt class="col-sm-2" style="color: white;">
             @Html.DisplayNameFor(model => model.DataLancamento)
@@ -82,44 +82,6 @@
             <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.Media)
             </dd>*@
-
-        <dt class="col-sm-2" style="object-fit: fill; color: white;border-top:20px solid transparent">
-            Comentários:
-        </dt>
-        <div style="border-top:20px solid transparent; border-left:20px solid transparent">
-
-            @foreach (var item in Model.JogosReview)
-            {
-                @if (@item.Visivel == true)
-                {
-                    <div>
-                    <a style="color:#64fcfc">@item.Utilizador.Email</a> <br />
-                    @if (@item.NotaReview < 45)
-                    {
-                        <div style="height: 24px; width: 35px; text-align: center; background-color: red">
-                            <a>@item.NotaReview</a> <br />
-                        </div> }
-                    else if (@item.NotaReview >= 45 && @item.NotaReview < 75)
-                    {
-                        <div style="height: 24px; width: 35px; text-align: center; background-color: yellow">
-                            <a>@item.NotaReview</a> <br />
-                        </div> }
-                    else if (@item.NotaReview >= 75 && @item.NotaReview < 90)
-                    {
-                        <div style="height: 24px; width: 35px; text-align: center; background-color: greenyellow">
-                            <a>@item.NotaReview</a> <br />
-                        </div> }
-                    else if (@item.NotaReview >= 90)
-                    {
-                        <div style="height: 24px; width: 35px; text-align: center; background-color: green">
-                            <a>@item.NotaReview</a> <br />
-                        </div>}
-                        <a style="color: white">@item.Comentario</a> <br />
-                        <hr style=" background-color: white; width: 1000px" />
-                    </div>
-                    }
-                 }
-        </div>
     </dl>
 </div>
 @*@if (User.Identity.IsAuthenticated) {*@
@@ -133,22 +95,134 @@
             <input type="submit" value="Add Comment" class="btn btn-primary"/>
         </form>
     </div>*@
-@if (User.Identity.IsAuthenticated)
-{
-    <div>
-    <form asp-action="CreateComment">
-        <input type="hidden" name="jogoId" value="@Model.IdJogo" />
-        <span style="color:white">Nota: </span><input required type="number" name="nota" min="1" max="100" text-align="center" maxlength="2" placeholder="1 a 100" /><br />
-        <span style="color:white">Comentário:</span><br />
-        <textarea required name="comentario" style="resize:none; width:1100px; height:100px;"></textarea><br />
-        <input type="submit" value="Add Comment" class="btn btn-primary" />
-    </form>
-    </div>
- }
+
+
+
+<div style="border-top: 50px solid transparent">
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        @if (1 == 1)
+        {
+            int flag = 0;
+            @foreach (var item in Model.JogosReview)
+            {
+                if (User.Identity.Name == item.Utilizador.Email)
+                {
+                    if (item.NotaReview != 0)
+                    {
+                        flag = 1;
+                    }
+                }
+            }
+            if (flag == 0)
+            {
+                <form asp-action="CreateRating">
+                    <div style="border-top:20px solid transparent; border-left:15px solid transparent">
+                        <input type="hidden" name="jogoId" value="@Model.IdJogo" />
+                        <a style="color: white; font-weight: bold">Nota: </a><input required type="number" name="nota" min="1" max="100" text-align="center" maxlength="2" placeholder="1 a 100" /><br />
+                        <div style="border-top: 10px solid transparent; border-bottom: 25px solid transparent">
+                            <input type="submit" value="Adicionar nota" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </form>
+            }
+        }
+    }
+
+    @foreach (var item in Model.JogosReview)
+    {
+        if (@item.Utilizador.Email == User.Identity.Name && item.NotaReview != 0)
+        {
+            <div style="border-left:30px solid transparent">
+                <dl class="row">
+                    <dt>
+                        <a style="color: white">A tua nota:</a>
+                    </dt>
+                    <dd class="col-sm-10" style="object-fit: fill; color: #272727">
+                        @if (@item.NotaReview < 45)
+                        {
+                            <div style="height: 24px; width: 35px; text-align: center; background-color: red">
+                                <a>@item.NotaReview</a> <br />
+                            </div>
+                        }
+                        else if (@item.NotaReview >= 45 && @item.NotaReview < 75)
+                        {
+                            <div style="height: 24px; width: 35px; text-align: center; background-color: yellow">
+                                <a>@item.NotaReview</a> <br />
+                            </div>
+                        }
+                        else if (@item.NotaReview >= 75 && @item.NotaReview < 90)
+                        {
+                            <div style="height: 24px; width: 35px; text-align: center; background-color: greenyellow">
+                                <a>@item.NotaReview</a> <br />
+                            </div>
+                        }
+                        else if (@item.NotaReview >= 90)
+                        {
+                            <div style="height: 24px; width: 35px; text-align: center; background-color: green">
+                                <a>@item.NotaReview</a> <br />
+                            </div>
+                        }
+                    </dd>
+                    <div>
+                        <button class="btn btn-primary" style="height:35px; margin-right:10px" onclick="location.href = '@Url.Action("Edit","Reviews", new { id = item.IdReview})'">Editar</button>
+                        <button class="btn btn-primary" style="height:35px; margin-right:10px" onclick="location.href = '@Url.Action("Delete","Reviews", new { id = item.IdReview})'">Eliminar</button>
+                    </div>
+                </dl>
+            </div>
+        }
+    }
+
+    @if (1 == 1)
+    {
+        var result = ViewData.Model.JogosReview.Where(b => b.NotaReview == 0);
+
+        @if (result.Any())
+        {
+            <dt class="col-sm-2" style="object-fit: fill; color: white;">
+                Comentários:
+            </dt>
+            <div style="border-top:20px solid transparent; border-left:20px solid transparent">
+                @foreach (var item in Model.JogosReview)
+                {
+                    @if (@item.Visivel == true && item.NotaReview == 0)
+                    {
+                        <div>
+                            <a style="color:#64fcfc">@item.Utilizador.Email</a> <br />
+                            <a style="color: white">@item.Comentario</a> <br />
+                            <hr style="background-color: white; width: max" />
+                        </div>
+
+                    }
+                }
+            </div>
+        }
+        else
+        {
+            <dt class="col-sm-2" style="object-fit: fill; color: white;">
+                Comentários:
+            </dt>
+            <a style="border-left: 15px solid transparent; color:#64fcfc">Ainda não existem comentários.</a>
+        }
+    }
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form asp-action="CreateComment" style="border-top:20px solid transparent; border-left:20px solid transparent; border-bottom: 10px solid transparent">
+            <input type="hidden" name="jogoId" value="@Model.IdJogo" />
+            <span style="color:white">Comentário:</span><br />
+            <textarea required name="comentario" style="resize:none; width:1100px; height:100px;"></textarea><br />
+            <input type="submit" value="Adicionar comentário" class="btn btn-primary" />
+        </form>
+    }
+</div>
+
 <div>
-    @if (User.IsInRole("Gestor")){
-       <a  class="textoCor" asp-action="Edit" asp-route-id="@Model.IdJogo">Editar</a>
-       <a  class="textoCor" asp-action="Delete" asp-route-id="@Model.IdJogo">Eliminar</a>
-     }
+    @if (User.IsInRole("Gestor"))
+    {
+        <a class="textoCor" asp-action="Edit" asp-route-id="@Model.IdJogo">Editar</a>
+        <a class="textoCor" asp-action="Delete" asp-route-id="@Model.IdJogo">Eliminar</a>
+    }
     <a class="textoCor" asp-action="Index">Voltar à lista</a>
 </div>
