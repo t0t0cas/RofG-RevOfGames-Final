@@ -70,17 +70,14 @@
                 <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>
         </form>
-        @if (Model.NotaReview != 0) 
-        { 
-        <button class="btn btn-danger" style="height:35px" onclick="location.href = '@Url.Action("Delete","Reviews", new { id = Model.IdReview})'">Eliminar</button>
-        }
     </div>
 </div>
 
-@if (User.IsInRole("Gestor")) { 
-<div>
-    <a asp-action="Index">Lista de Reviews</a>
-</div>
+@if (User.IsInRole("Gestor"))
+{
+    <div>
+        <a asp-action="Index">Lista de Reviews</a>
+    </div>
 }
 
 @section Scripts {

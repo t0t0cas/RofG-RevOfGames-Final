@@ -100,6 +100,70 @@
 
 <div style="border-top: 50px solid transparent">
 
+    @if (1 == 1)
+    {
+        int soma = 0;
+        int media = 0;
+        var result = ViewData.Model.JogosReview.Where(b => b.NotaReview != 0 && b.Jogo.IdJogo == Model.IdJogo);
+        int num = ViewData.Model.JogosReview.Count(b => b.NotaReview != 0 && b.Jogo.IdJogo == Model.IdJogo);
+
+        @if (result.Any())
+        {
+            foreach (var item in Model.JogosReview)
+            {
+                if (item.NotaReview != 0 && item.Jogo.IdJogo == Model.IdJogo)
+                {
+                    soma = soma + (int)item.NotaReview;
+                }
+            }
+            media = soma / num;
+            Model.Media = media;
+
+            <div style="border-left:30px solid transparent">
+                <dl class="row">
+                    <dt>
+                        <a style="color: white">Média:</a>
+                    </dt>
+                    <dd class="col-sm-10" style="object-fit: fill; color: #272727">
+                        @if (Model.Media < 45)
+                        {
+                            <div style="height: 24px; width: 35px; text-align: center; background-color: red">
+                                <a>@Model.Media</a> <br />
+                            </div>
+                        }
+                        else if (Model.Media >= 45 && Model.Media < 75)
+                        {
+                            <div style="height: 24px; width: 35px; text-align: center; background-color: yellow">
+                                <a>@Model.Media</a> <br />
+                            </div>
+                        }
+                        else if (Model.Media >= 75 && Model.Media < 90)
+                        {
+                            <div style="height: 24px; width: 35px; text-align: center; background-color: greenyellow">
+                                <a>@Model.Media</a> <br />
+                            </div>
+                        }
+                        else if (Model.Media >= 90)
+                        {
+                            <div style="height: 24px; width: 35px; text-align: center; background-color: green">
+                                <a>@Model.Media</a> <br />
+                            </div>
+                        }
+                    </dd>
+                </dl>
+            </div>
+        }
+        else
+        {
+            <div style="border-left: 15px solid transparent; border-bottom: 15px solid transparent">
+                <dt style="color: white">
+                    Média:
+                </dt>
+                <a style="color:#64fcfc">Ninguém avaliou o jogo.</a>
+            </div>
+        }
+    }
+
     @if (User.Identity.IsAuthenticated)
     {
         @if (1 == 1)
@@ -134,7 +198,7 @@
     {
         if (@item.Utilizador.Email == User.Identity.Name && item.NotaReview != 0)
         {
-            <div style="border-left:30px solid transparent">
+            <div style="border-left:30px solid transparent; border-bottom:20px solid transparent">
                 <dl class="row">
                     <dt>
                         <a style="color: white">A tua nota:</a>
@@ -143,33 +207,93 @@
                         @if (@item.NotaReview < 45)
                         {
                             <div style="height: 24px; width: 35px; text-align: center; background-color: red">
-                                <a>@item.NotaReview</a> <br />
+                                <a>@item.NotaReview</a>
                             </div>
                         }
                         else if (@item.NotaReview >= 45 && @item.NotaReview < 75)
                         {
                             <div style="height: 24px; width: 35px; text-align: center; background-color: yellow">
-                                <a>@item.NotaReview</a> <br />
+                                <a>@item.NotaReview</a>
                             </div>
                         }
                         else if (@item.NotaReview >= 75 && @item.NotaReview < 90)
                         {
                             <div style="height: 24px; width: 35px; text-align: center; background-color: greenyellow">
-                                <a>@item.NotaReview</a> <br />
+                                <a>@item.NotaReview</a>
                             </div>
                         }
                         else if (@item.NotaReview >= 90)
                         {
                             <div style="height: 24px; width: 35px; text-align: center; background-color: green">
-                                <a>@item.NotaReview</a> <br />
+                                <a>@item.NotaReview</a>
                             </div>
                         }
                     </dd>
                     <div>
                         <button class="btn btn-primary" style="height:35px; margin-right:10px" onclick="location.href = '@Url.Action("Edit","Reviews", new { id = item.IdReview})'">Editar</button>
-                        <button class="btn btn-primary" style="height:35px; margin-right:10px" onclick="location.href = '@Url.Action("Delete","Reviews", new { id = item.IdReview})'">Eliminar</button>
+                        <button class="btn btn-danger" style="height:35px; margin-right:10px" onclick="location.href = '@Url.Action("Delete","Reviews", new { id = item.IdReview})'">Eliminar</button>
                     </div>
                 </dl>
+            </div>
+        }
+    }
+
+    @if (1 == 1)
+    {
+        var result = ViewData.Model.JogosReview.Where(b => b.Utilizador.Email != User.Identity.Name && b.NotaReview != 0);
+
+        @if (result.Any())
+        {
+            <div>
+                <dt class="col-sm-2" style="object-fit: fill; color: white; border-bottom: 15px solid transparent">
+                    Outras avaliações:
+                </dt>
+                @foreach (var item in Model.JogosReview)
+                {
+                    @if (item.Utilizador.Email != User.Identity.Name && item.NotaReview != 0)
+                    {
+                        <div style="border-left: 35px solid transparent">
+                            <dl class="row">
+                                <a style="color:#64fcfc">@item.Utilizador.Email</a>
+                                <dd class="col-sm-10" style="object-fit: fill; color: #272727">
+                                    @if (@item.NotaReview < 45)
+                                    {
+                                        <div style="height: 24px; width: 35px; text-align: center; background-color: red">
+                                            <a>@item.NotaReview</a> <br />
+                                        </div>
+                                    }
+                                    else if (@item.NotaReview >= 45 && @item.NotaReview < 75)
+                                    {
+                                        <div style="height: 24px; width: 35px; text-align: center; background-color: yellow">
+                                            <a>@item.NotaReview</a> <br />
+                                        </div>
+                                    }
+                                    else if (@item.NotaReview >= 75 && @item.NotaReview < 90)
+                                    {
+                                        <div style="height: 24px; width: 35px; text-align: center; background-color: greenyellow">
+                                            <a>@item.NotaReview</a> <br />
+                                        </div>
+                                    }
+                                    else if (@item.NotaReview >= 90)
+                                    {
+                                        <div style="height: 24px; width: 35px; text-align: center; background-color: green">
+                                            <a>@item.NotaReview</a> <br />
+                                        </div>
+                                    }
+                                </dd>
+                            </dl>
+                        </div>
+                    }
+                }
+            </div>
+        }
+        else
+        {
+            <div style="border-bottom: 15px solid transparent">
+                <dt class="col-sm-2" style="object-fit: fill; color: white;">
+                    Outras avaliações:
+                </dt>
+                <a style="border-left: 15px solid transparent; color:#64fcfc">Ainda não existem avaliações de outros utilizadores.</a>
             </div>
         }
     }
@@ -191,9 +315,15 @@
                         <div>
                             <a style="color:#64fcfc">@item.Utilizador.Email</a> <br />
                             <a style="color: white">@item.Comentario</a> <br />
+                            @if (item.Utilizador.Email == User.Identity.Name || User.IsInRole("Gestor"))
+                            {
+                                <div style="border-top: 10px solid transparent">
+                                    <button class="btn btn-primary" style="height:35px; margin-right:10px" onclick="location.href = '@Url.Action("Edit","Reviews", new { id = item.IdReview})'">Editar</button>
+                                    <button class="btn btn-danger" style="height:35px; margin-right:10px" onclick="location.href = '@Url.Action("Delete","Reviews", new { id = item.IdReview})'">Eliminar</button>
+                                </div>
+                            }
                             <hr style="background-color: white; width: max" />
                         </div>
-
                     }
                 }
             </div>
@@ -216,6 +346,7 @@
             <input type="submit" value="Adicionar comentário" class="btn btn-primary" />
         </form>
     }
+
 </div>
 
 <div>
