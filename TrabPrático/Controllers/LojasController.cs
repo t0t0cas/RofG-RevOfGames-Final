@@ -21,6 +21,8 @@ namespace TrabPrático.Controllers
             _context = context;
         }
 
+       
+
         // GET: Lojas
         public async Task<IActionResult> Index()
         {

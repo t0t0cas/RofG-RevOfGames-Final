@@ -21,5 +21,15 @@ namespace TrabPrático.Models
         /// Imagem do Jogo
         /// </summary>
         public string ImagemFoto { get; set; }
+
+        /// <summary>
+        /// Nota dada ao jogo
+        /// </summary>
+        public double NotaJogo { get; set; }
+
+        /// <summary>
+        /// Descrição do Jogo
+        /// </summary>
+        public string DescricaoJogo { get; set; }
     }
 }

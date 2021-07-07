@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,11 +18,13 @@ namespace TrabPrático.Controllers.API
     {
         private readonly ApplicationDbContext _context;
 
-        public JogosAPI(ApplicationDbContext context)
+        private readonly IWebHostEnvironment _caminho;
+        public JogosAPI(ApplicationDbContext context, IWebHostEnvironment caminho)
         {
             _context = context;
+            _caminho = caminho;
         }
-
+        
         /// <summary>
         /// Lista os jogos existentes na BD
         /// </summary>
@@ -34,7 +38,9 @@ namespace TrabPrático.Controllers.API
                                  .Select(j => new JogosAPIViewModel { 
                                          IdJogo = j.IdJogo,
                                          NomeJogo = j.Nome,
-                                         ImagemFoto = j.Imagem})
+                                         ImagemFoto = j.Imagem,
+                                         NotaJogo = j.Nota,
+                                         DescricaoJogo = j.Descricao})
                                  .OrderBy(j=>j.IdJogo)
                                  .ToListAsync();
             return listaJogos;
@@ -85,11 +91,26 @@ namespace TrabPrático.Controllers.API
             return NoContent();
         }
 
+        /// <summary>
+        /// Endpoint para receber os dados do Formulário de adição de novas fotografias
+        /// </summary>
+        /// <param name="jogos"></param>
+        /// <param name="UpFotografia"></param>
+        /// <returns></returns>
         // POST: api/JogosAPI
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Jogos>> PostJogos(Jogos jogos)
+        public async Task<ActionResult<Jogos>> PostJogos([FromForm]Jogos jogos, IFormFile UpFotografia)
         {
+
+            jogos.Imagem = "";
+            string localizacao = _caminho.WebRootPath;
+            var nomeDaImagem = Path.Combine(localizacao, "fotosJogos", UpFotografia.FileName);
+            //jogos.Imagem = Path.GetExtension(UpFotografia.FileName).ToLower();
+            var teste = new FileStream(nomeDaImagem, FileMode.Create);
+            await UpFotografia.CopyToAsync(teste);
+            jogos.Imagem = UpFotografia.FileName;
+            
             _context.Jogos.Add(jogos);
             await _context.SaveChangesAsync();
 
