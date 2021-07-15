@@ -32,7 +32,7 @@
             @Html.DisplayFor(model => model.Tipo)
         </dd>
         <dt class="col-sm-2" style="object-fit: fill; color: white">
-            @Html.DisplayNameFor(model => model.CategoriaIdade)
+            <a>Categoria/Idade</a>
         </dt>
         <dd class="col-sm-10" style="object-fit: fill; color: white">
             @Html.DisplayFor(model => model.CategoriaIdade)
@@ -44,7 +44,7 @@
             @Html.DisplayFor(model => model.Nota)
         </dd>
         <dt class="col-sm-2" style="object-fit: fill; color: white">
-            @Html.DisplayNameFor(model => model.DataLancamento)
+            <a>Lançamento</a>
         </dt>
         <dd class="col-sm-10" style="object-fit: fill; color: white">
             @Html.DisplayFor(model => model.DataLancamento)
@@ -60,13 +60,24 @@
             </dt>
             <dd class = "col-sm-10">
                 @Html.DisplayFor(model => model.Media)
-            </dd>*@
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.LinkJogo)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.LinkJogo)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Loja)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Loja.IdLoja)
+            </dd class>*@
     </dl>
-
 
     <form asp-action="Delete">
         <a class="textoCor" asp-action="Index">Voltar á lista</a>
         <input type="hidden" asp-for="IdJogo" />
-        <input type="submit" value="Delete" class="btn btn-danger" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" />
     </form>
 </div>}

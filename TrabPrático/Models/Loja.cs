@@ -9,6 +9,12 @@ namespace TrabPrático.Models
 {
     public class Loja
     {
+        public Loja()
+        {
+            // inicializar a lista de Jogos da Loja
+            LojaJogos = new HashSet<Jogos>();
+        }
+
         /// <summary>
         /// Identificador da loja
         /// </summary>
@@ -32,11 +38,6 @@ namespace TrabPrático.Models
 
         //***********************************
 
-        /// <summary>
-        /// FK para os Jogos
-        /// </summary>
-        [ForeignKey(nameof(Jogo))]
-        public int JogoFK { get; set; }
-        public Jogos Jogo { get; set; }
+        public ICollection<Jogos> LojaJogos { get; set; }
     }
 }

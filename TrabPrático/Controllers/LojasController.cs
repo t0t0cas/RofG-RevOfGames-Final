@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,23 +13,21 @@ using TrabPrático.Models;
 
 namespace TrabPrático.Controllers
 {
-    //[Authorize]
     public class LojasController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public LojasController(ApplicationDbContext context)
+        private readonly IWebHostEnvironment _path;
+        public LojasController(ApplicationDbContext context, IWebHostEnvironment path)
         {
             _context = context;
+            _path = path;
         }
-
-       
 
         // GET: Lojas
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Loja.Include(l => l.Jogo);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Loja.ToListAsync());
         }
 
         // GET: Lojas/Details/5
@@ -39,8 +39,9 @@ namespace TrabPrático.Controllers
             }
 
             var loja = await _context.Loja
-                .Include(l => l.Jogo)
-                .FirstOrDefaultAsync(m => m.IdLoja == id);
+                .Where(a => a.IdLoja == id)
+                                       .Include(r => r.LojaJogos)
+                                       .FirstOrDefaultAsync();
             if (loja == null)
             {
                 return NotFound();
@@ -52,7 +53,6 @@ namespace TrabPrático.Controllers
         // GET: Lojas/Create
         public IActionResult Create()
         {
-            ViewData["JogoFK"] = new SelectList(_context.Jogos, "IdJogo", "IdJogo");
             return View();
         }
 
@@ -61,7 +61,7 @@ namespace TrabPrático.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdLoja,Nome,ImagemLoja,Link,JogoFK")] Loja loja)
+        public async Task<IActionResult> Create([Bind("IdLoja,Nome,ImagemLoja,Link")] Loja loja)
         {
             if (ModelState.IsValid)
             {
@@ -69,7 +69,6 @@ namespace TrabPrático.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["JogoFK"] = new SelectList(_context.Jogos, "IdJogo", "IdJogo", loja.JogoFK);
             return View(loja);
         }
 
@@ -86,7 +85,6 @@ namespace TrabPrático.Controllers
             {
                 return NotFound();
             }
-            ViewData["JogoFK"] = new SelectList(_context.Jogos, "IdJogo", "IdJogo", loja.JogoFK);
             return View(loja);
         }
 
@@ -95,8 +93,36 @@ namespace TrabPrático.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdLoja,Nome,ImagemLoja,Link,JogoFK")] Loja loja)
+        public async Task<IActionResult> Edit(int id, [Bind("IdLoja,Nome,ImagemLoja,Link")] Loja loja, IFormFile imagem)
         {
+            if (imagem != null)
+            {
+                loja.ImagemLoja = imagem.FileName;
+
+                //_webhost.WebRootPath vai ter o path para a pasta wwwroot
+                var guardarImagem = Path.Combine(_path.WebRootPath, "fotoloja", imagem.FileName);
+
+                var textoImagem = Path.GetExtension(imagem.FileName);
+
+                if (textoImagem == ".jpg" || textoImagem == ".png" || textoImagem == ".JPG" || textoImagem == ".PNG")
+                {
+                    using (var uploadimg = new FileStream(guardarImagem, FileMode.Create))
+                    {
+                        await imagem.CopyToAsync(uploadimg);
+
+                    }
+                }
+            }
+            else
+            {
+                Loja lojaAux = _context.Loja.Find(loja.IdLoja);
+
+                _context.Entry<Loja>(lojaAux).State = EntityState.Detached;
+
+
+                loja.ImagemLoja = lojaAux.ImagemLoja;
+            }
+
             if (id != loja.IdLoja)
             {
                 return NotFound();
@@ -122,7 +148,6 @@ namespace TrabPrático.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["JogoFK"] = new SelectList(_context.Jogos, "IdJogo", "IdJogo", loja.JogoFK);
             return View(loja);
         }
 
@@ -135,7 +160,6 @@ namespace TrabPrático.Controllers
             }
 
             var loja = await _context.Loja
-                .Include(l => l.Jogo)
                 .FirstOrDefaultAsync(m => m.IdLoja == id);
             if (loja == null)
             {

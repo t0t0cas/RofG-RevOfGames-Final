@@ -5,8 +5,10 @@
     <link rel="stylesheet" href="~/css/ImagensJogos.css" />
 </head>
 
-<h1 style="color: white">Index</h1>
-
+<div style=" text-align: center; border-top: 20px solid transparent">
+    <img style=" width: 400px; height: 70px; object-fit:fill;" src="~/fotosjogos/logoJogos.png"
+         title="Lista de Jogos" />
+</div>
 @if (User.IsInRole("Gestor"))
 {
 <p>
@@ -14,7 +16,8 @@
     <div style="border-top: 2px solid transparent">
         <hr style="background-color: white" />
     </div>
-</p>}
+</p>
+}
 
 
 @foreach (var item in Model)
@@ -28,4 +31,5 @@
             </div>
         </div>
     </a>
-</div>}
+</div>
+}

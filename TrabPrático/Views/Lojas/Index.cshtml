@@ -4,8 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
+<div style=" text-align: center; border-top: 20px solid transparent; border-bottom: 20px solid transparent">
+    <img style=" width: 280px; height: 60px; object-fit:fill;" src="~/fotosjogos/logoLojas.png"
+         title="Lista de Jogos" />
+</div>
 @if (User.IsInRole("Gestor")) { 
     <p>
     <a class="textoCor" style="margin-bottom: 10px" asp-action="Create">Adicionar Novo</a>
@@ -14,43 +16,45 @@
 
 <table class="table">
     <thead>
-        <tr>
+        <tr style="color: white">
             <th>
-                <a style="color: white">Nome da Loja</a>
+                <a style="color: white">Loja</a>
             </th>
             <th>
-                <a style="color: white">Nome do Jogo</a>
+                <a style="color: white">Link</a>
             </th>
-            <th style="text-align: center">
+            <th>
                 <a style="color: white">Site da Loja</a>
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-       @foreach (var item in Model) {
+@foreach (var item in Model) {
         <tr>
             <td style="color: white">
                 <a style="color: white"> @Html.DisplayFor(modelItem => item.Nome) </a>
             </td>
             <td>
-                <a style="color: white"> @Html.DisplayFor(modelItem => item.Jogo.Nome) </a>
-            </td>
-            <td style="text-align: center">
-                <a href="@Html.DisplayFor(modelItem => item.Link)" ><img src="~/fotoloja/@Html.DisplayFor(modelItem => item.ImagemLoja) "
-                                                                                        width="150"
-                                                                                        alt="Fotografia do @Html.DisplayFor(modelItem => item.Nome)"
-                                                                                        title="@Html.DisplayFor(modelItem => item.Nome)" /></a>    
+                <a style="color: #64fcfc" href="@Html.DisplayFor(modelItem => item.Link)">@Html.DisplayFor(modelItem => item.Link)</a>
             </td>
             <td>
-                 @if(User.IsInRole("Gestor"))
-                  {
-                    <div>
-                    <a class="textoCor" asp-action="Edit" asp-route-id="@item.IdLoja">Editar</a> |
-                    <a class="textoCor" asp-action="Details" asp-route-id="@item.IdLoja">Detalhes</a> |
+                <a href="@Html.DisplayFor(modelItem => item.Link)">
+                    <img src="~/fotoloja/@Html.DisplayFor(modelItem => item.ImagemLoja) "
+                         width="150"
+                         alt="Fotografia do @Html.DisplayFor(modelItem => item.Nome)"
+                         title="@Html.DisplayFor(modelItem => item.Nome)" />
+                </a>
+            </td>
+            <td>
+            <a class="textoCor" asp-action="Details" asp-route-id="@item.IdLoja">Jogos</a>
+            @if (User.IsInRole("Gestor"))
+            {
+                <div>
+                    <a class="textoCor" asp-action="Edit" asp-route-id="@item.IdLoja">Editar</a>
                     <a class="textoCor" asp-action="Delete" asp-route-id="@item.IdLoja">Eliminar</a>
-                    </div>
-                  }
+                </div>  
+            }
             </td>
         </tr>
 }

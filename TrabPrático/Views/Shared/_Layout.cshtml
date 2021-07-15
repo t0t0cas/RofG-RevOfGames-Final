@@ -29,9 +29,12 @@
                         <li class="nav-item">
                             <a class="textoCor" asp-area="" asp-controller="Lojas" asp-action="Index">Loja</a>
                         </li>
-                        <li hidden class="nav-item">
-                            <a class="textoCor" asp-area="" asp-controller="Reviews" asp-action="Privacy">Reviews</a>
+                        @if (User.IsInRole("Gestor"))
+                        {
+                        <li class="nav-item">
+                            <a class="textoCor" asp-area="" asp-controller="Reviews" asp-action="Index">Reviews</a>
                         </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -45,10 +48,10 @@
     </div>
 
     @*<footer style="background: #1c1b1b;" class="footer text-muted">
-    <div class="container">
-        &copy; 2021 - TrabPrático - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-    </div>
-    </footer>*@
+        <div class="container">
+            &copy; 2021 - TrabPrático - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+        </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<TrabPrático.Models.Review>
 
-@{
-    ViewData["Title"] = "Index";
-}
+@{ ViewData["Title"] = "Index"; }
 
-<h1 style="color:white">Index</h1>
+<div style=" text-align: center; border-top: 15px solid transparent">
+    <img style=" width: 380px; height: 70px; object-fit:fill;" src="~/fotosjogos/logoReviews.png"
+         title="LogoReviews" />
+</div>
 
 <table class="table">
     <thead>
@@ -13,13 +14,13 @@
                 <a>Jogo</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NotaReview )
-            </th> 
+                <a>Nota</a>
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Comentario)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DataReview)
+                <a>Data</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Visivel)
@@ -32,37 +33,80 @@
     </thead>
     <tbody>
 
-    @foreach (var item in Model) {
-        <tr style="color: white">
-            <td>
-                <div>
-                    <img style=" object-fit:fill;" src="~/fotosjogos/@Html.DisplayFor(model => item.Jogo.Imagem)"
-                         width="100"
-                         alt="Fotografia do @Html.DisplayFor(model => item.Jogo.Nome)"
-                         title="@Html.DisplayFor(model => item.Jogo.Nome)" />
-                </div>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NotaReview)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Comentario)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataReview)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Visivel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Utilizador.Email)
-            </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.IdReview">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.IdReview">Detalhes</a> |
-                    <a asp-action="Delete" asp-route-id="@item.IdReview">Eliminar</a>
-                </td>
-        </tr>
-    }
+        @foreach (var item in Model)
+        {
+<tr style="color: white">
+    <td>
+        <a style="cursor:pointer" onclick="location.href = '@Url.Action("Details","Jogos", new { id = item.Jogo.IdJogo})'">
+            <img src="~/fotosjogos/@Html.DisplayFor(modelItem => item.Jogo.Imagem) "
+                 width="100"
+                 alt="Fotografia do @Html.DisplayFor(modelItem => item.Jogo.Nome)"
+                 title="@Html.DisplayFor(modelItem => item.Jogo.Nome)" />
+        </a>
+    </td>
+    <td style="color: #272727">
+        @if (@item.NotaReview == 0)
+        {
+            <div style="height: 24px; width: 100px; color: red">
+                <a>Sem nota</a>
+            </div>
+        }
+        else if (@item.NotaReview < 45)
+        {
+        <div style="height: 24px; width: 35px; text-align: center; background-color: red">
+            <a>@item.NotaReview</a>
+        </div> 
+        }
+        else if (@item.NotaReview >= 45 && @item.NotaReview < 75)
+        {
+        <div style="height: 24px; width: 35px; text-align: center; background-color: yellow">
+            <a>@item.NotaReview</a>
+        </div> 
+        }
+        else if (@item.NotaReview >= 75 && @item.NotaReview < 90)
+        {
+        <div style="height: 24px; width: 35px; text-align: center; background-color: greenyellow">
+            <a>@item.NotaReview</a>
+        </div> 
+        }
+        else if (@item.NotaReview >= 90)
+        {
+        <div style="height: 24px; width: 35px; text-align: center; background-color: green">
+            <a>@item.NotaReview</a>
+        </div>                
+        }
+    </td>
+    <td>
+        @if (@item.NotaReview != 0)
+        {
+        <div style="color: red">
+            <a>Sem comentário</a>
+        </div> 
+        }
+        else
+        {
+        <div style="width:160px">
+            @Html.DisplayFor(modelItem => item.Comentario)
+        </div>                
+        }
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DataReview)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Visivel)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Utilizador.Email)
+    </td>
+    <td>
+        <div>
+            <a class="textoCor" asp-action="Edit" asp-route-id="@item.IdReview">Editar</a>
+            <a class="textoCor" asp-action="Details" asp-route-id="@item.IdReview">Detalhes</a>
+            <a class="textoCor" asp-action="Delete" asp-route-id="@item.IdReview">Eliminar</a>
+        </div>
+    </td>
+</tr>
+}
     </tbody>
 </table>

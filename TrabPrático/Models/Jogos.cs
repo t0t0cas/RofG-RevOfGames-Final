@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -57,13 +58,26 @@ namespace TrabPrático.Models
         /// Descrição do Jogo
         /// </summary>
         public string Descricao { get; set; }
-        
+
         /// <summary>
         /// Média da nota dada aos jogos pelos utilizadores 
         /// </summary>
         public double Media { get; set; }
 
+        /// <summary>
+        /// Link do jogo na loja
+        /// </summary>
+        public string LinkJogo { get; set; }
+
         //**********************************
-        public ICollection<Review> JogosReview { get; set;}
+
+        /// <summary>
+        /// FK da Loja 
+        /// </summary>
+        [ForeignKey(nameof(Loja))]
+        public int LojaFK { get; set; }
+        public Loja Loja { get; set; }
+
+        public ICollection<Review> JogosReview { get; set; }
     }
 }

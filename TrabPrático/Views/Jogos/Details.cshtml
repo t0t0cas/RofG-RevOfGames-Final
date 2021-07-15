@@ -61,27 +61,32 @@
                 </div>}
         </dd>
         <dt class="col-sm-2" style="color: white;">
-            @Html.DisplayNameFor(model => model.DataLancamento)
+            <a>Lançamento</a>
         </dt>
         <dd class="col-sm-10" style="color: white">
             @Html.DisplayFor(model => model.DataLancamento)
+        </dd>
+        <dt class="col-sm-2" style="object-fit: fill; color: white">
+            <a style="color:white">Loja</a>
+        </dt>
+        <dd class="col-sm-10" style="object-fit: fill; color: white">
+            <a href="@Html.DisplayFor(model => model.LinkJogo)">
+                <img src="~/fotoloja/@Html.DisplayFor(model => model.Loja.ImagemLoja) "
+                     width="150"
+                     alt="Fotografia do @Html.DisplayFor(model => model.Loja.Nome)"
+                     title="@Html.DisplayFor(model => model.Loja.Nome)" />
+            </a>
         </dd>
         @*<dt class="col-sm-2" style="color: white">
                 @Html.DisplayNameFor(model => model.Imagem)
             </dt>*@
 
         <dt class="col-sm-2" style="object-fit: fill; color: white">
-            @Html.DisplayNameFor(model => model.Descricao)
+            <a>Descrição</a>
         </dt>
         <dd class="col-sm-10" style="object-fit: fill; color: white">
             @Html.DisplayFor(model => model.Descricao)
         </dd>
-        @*<dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Media)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Media)
-            </dd>*@
     </dl>
 </div>
 @*@if (User.Identity.IsAuthenticated) {*@
@@ -300,7 +305,7 @@
 
     @if (1 == 1)
     {
-        var result = ViewData.Model.JogosReview.Where(b => b.NotaReview == 0);
+        var result = ViewData.Model.JogosReview.Where(b => b.NotaReview == 0 && b.Visivel == true);
 
         @if (result.Any())
         {
@@ -308,23 +313,20 @@
                 Comentários:
             </dt>
             <div style="border-top:20px solid transparent; border-left:20px solid transparent">
-                @foreach (var item in Model.JogosReview)
+                @foreach (var item in result)
                 {
-                    @if (@item.Visivel == true && item.NotaReview == 0)
-                    {
-                        <div>
-                            <a style="color:#64fcfc">@item.Utilizador.Email</a> <br />
-                            <a style="color: white">@item.Comentario</a> <br />
-                            @if (item.Utilizador.Email == User.Identity.Name || User.IsInRole("Gestor"))
-                            {
-                                <div style="border-top: 10px solid transparent">
-                                    <button class="btn btn-primary" style="height:35px; margin-right:10px" onclick="location.href = '@Url.Action("Edit","Reviews", new { id = item.IdReview})'">Editar</button>
-                                    <button class="btn btn-danger" style="height:35px; margin-right:10px" onclick="location.href = '@Url.Action("Delete","Reviews", new { id = item.IdReview})'">Eliminar</button>
-                                </div>
-                            }
-                            <hr style="background-color: white; width: max" />
-                        </div>
-                    }
+                    <div>
+                        <a style="color:#64fcfc">@item.Utilizador.Email</a> <br />
+                        <a style="color: white">@item.Comentario</a> <br />
+                        @if (item.Utilizador.Email == User.Identity.Name || User.IsInRole("Gestor"))
+                        {
+                            <div style="border-top: 10px solid transparent">
+                                <button class="btn btn-primary" style="height:35px; margin-right:10px" onclick="location.href = '@Url.Action("Edit","Reviews", new { id = item.IdReview})'">Editar</button>
+                                <button class="btn btn-danger" style="height:35px; margin-right:10px" onclick="location.href = '@Url.Action("Delete","Reviews", new { id = item.IdReview})'">Eliminar</button>
+                            </div>
+                        }
+                        <hr style="background-color: white; width: max" />
+                    </div>
                 }
             </div>
         }

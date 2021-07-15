@@ -12,7 +12,7 @@
     <div class="col-md-4">
         @if (User.IsInRole("Gestor"))
         {
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="IdJogo" />
             <div class="form-group">
@@ -26,7 +26,7 @@
                 <span asp-validation-for="Tipo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label style="color:white" asp-for="CategoriaIdade" class="control-label"></label>
+                <label style="color:white" asp-for="CategoriaIdade" class="control-label">Categoria/Idade</label>
                 <input asp-for="CategoriaIdade" class="form-control" />
                 <span asp-validation-for="CategoriaIdade" class="text-danger"></span>
             </div>
@@ -36,25 +36,35 @@
                 <span asp-validation-for="Nota" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label style="color:white" asp-for="DataLancamento" class="control-label"></label>
+                <label style="color:white" asp-for="DataLancamento" class="control-label">Data de Lançamento</label>
                 <input asp-for="DataLancamento" class="form-control" />
                 <span asp-validation-for="DataLancamento" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label style="color:white" asp-for="Imagem" class="control-label"></label>
-                <input type="file" name="Imagem" accept=".jpg,.jpeg,.png" style=" color: #64fcfc;" />
+                <input type="file" name="imagem" accept=".jpg,.jpeg,.png" style=" color: #64fcfc;" />
                 <span asp-validation-for="Imagem" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label style="color:white" asp-for="Descricao" class="control-label"></label>
+                <label style="color:white" asp-for="Descricao" class="control-label">Descrição</label>
                 <input asp-for="Descricao" class="form-control" />
                 <span asp-validation-for="Descricao" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-                    <label asp-for="Media" class="control-label"></label>
-                    <input asp-for="Media" class="form-control" />
-                    <span asp-validation-for="Media" class="text-danger"></span>
-                </div>*@
+            <label asp-for="Media" class="control-label"></label>
+            <input asp-for="Media" class="form-control" />
+            <span asp-validation-for="Media" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label style="color:white" asp-for="LinkJogo" class="control-label"></label>
+                <input asp-for="LinkJogo" class="form-control" />
+                <span asp-validation-for="LinkJogo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label style="color:white" asp-for="LojaFK" class="control-label"></label>
+                <select asp-for="LojaFK" class="form-control" asp-items="ViewBag.LojaFK"></select>
+                <span asp-validation-for="LojaFK" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-primary" />
             </div>
@@ -68,5 +78,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

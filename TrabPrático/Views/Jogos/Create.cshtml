@@ -1,69 +1,77 @@
 ﻿@model TrabPrático.Models.Jogos
 
-@{
-    ViewData["Title"] = "Create";}
+@{ ViewData["Title"] = "Create"; }
 
-<h1 style="color:white">Create</h1>
+<div style=" text-align: center; border-top: 15px solid transparent">
+    <img style=" width: 340px; height: 80px; object-fit:fill;" src="~/fotosjogos/logoCriar.png"
+         title="Criar" />
+</div>
 
-<h4 style="color:white">Jogos</h4>
-<hr />
-@if (User.IsInRole("Gestor")) { 
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label style="color:white" asp-for="Nome" class="control-label"></label>
-                    <input asp-for="Nome" class="form-control" />
-                    <span asp-validation-for="Nome" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label style="color:white" asp-for="Tipo" class="control-label"></label>
-                    <input asp-for="Tipo" class="form-control" />
-                    <span asp-validation-for="Tipo" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label style="color:white" asp-for="CategoriaIdade" class="control-label"></label>
-                    <input asp-for="CategoriaIdade" class="form-control" />
-                    <span asp-validation-for="CategoriaIdade" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label style="color:white" asp-for="Nota" class="control-label"></label>
-                    <input asp-for="Nota" class="form-control" />
-                    <span asp-validation-for="Nota" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label style="color:white" asp-for="DataLancamento" class="control-label"></label>
-                    <input asp-for="DataLancamento" class="form-control" />
-                    <span asp-validation-for="DataLancamento" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label style="color:white" asp-for="Imagem" class="control-label"></label>
-                    <input asp-for="Imagem" class="form-control" />
-                    <span asp-validation-for="Imagem" class="text-danger"></span>
-                </div>
-                @*<div class="form-group">
-                    <label asp-for="Descricao" class="control-label"></label>
-                    <input asp-for="Descricao" class="form-control" />
-                    <span asp-validation-for="Descricao" class="text-danger"></span>
-                </div>
-                <div class="form-group">
+<hr style=" background-color: white" />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" enctype="multipart/form-data" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label style="color:white" asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label style="color:white" asp-for="Tipo" class="control-label"></label>
+                <input asp-for="Tipo" class="form-control" />
+                <span asp-validation-for="Tipo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label style="color:white" asp-for="CategoriaIdade" class="control-label">Categoria/Idade</label>
+                <input asp-for="CategoriaIdade" class="form-control" />
+                <span asp-validation-for="CategoriaIdade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label style="color:white" asp-for="Nota" class="control-label"></label>
+                <input asp-for="Nota" class="form-control" />
+                <span asp-validation-for="Nota" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label style="color:white" asp-for="DataLancamento" class="control-label">Data de Lançamento</label>
+                <input asp-for="DataLancamento" class="form-control" />
+                <span asp-validation-for="DataLancamento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label style="color:white" asp-for="Imagem" class="control-label"></label>
+                <input type="file" name="imagem" accept=".jpg,.jpeg,.png" style=" color: #64fcfc;" />
+                <span asp-validation-for="Imagem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label style="color:white" asp-for="Descricao" class="control-label">Descrição</label>
+                <input asp-for="Descricao" class="form-control" />
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
                     <label asp-for="Media" class="control-label"></label>
                     <input asp-for="Media" class="form-control" />
                     <span asp-validation-for="Media" class="text-danger"></span>
                 </div>*@
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
+            <div class="form-group">
+                <label style="color:white" asp-for="LinkJogo" class="control-label">Link do Jogo</label>
+                <input asp-for="LinkJogo" class="form-control" />
+                <span asp-validation-for="LinkJogo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label style="color:white" asp-for="LojaFK" class="control-label">Loja</label>
+                <select asp-for="LojaFK" class="form-control" asp-items="ViewBag.LojaFK"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Adicionar jogo" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
+</div>
+ 
+<div>
+    <a class="textoCor" asp-action="Index">Voltar à lista</a>
+</div>
 
-    <div>
-        <a class="textoCor" asp-action="Index">Voltar à lista</a>
-    </div>
-
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

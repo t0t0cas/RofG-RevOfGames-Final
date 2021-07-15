@@ -29,7 +29,32 @@
             @Html.DisplayNameFor(model => model.NotaReview)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NotaReview)
+            <div style="color: #272727">
+            @if (Model.NotaReview > 0 && Model.NotaReview < 45)
+            {
+                <div style="height: 24px; width: 35px; text-align: center; background-color: red">
+                    <a>@Model.NotaReview</a>
+                </div> 
+            }
+            else if (Model.NotaReview >= 45 && Model.NotaReview < 75)
+            {
+                <div style="height: 24px; width: 35px; text-align: center; background-color: yellow">
+                    <a>@Model.NotaReview</a>
+                </div> 
+            }
+            else if (Model.NotaReview >= 75 && Model.NotaReview < 90)
+            {
+                <div style="height: 24px; width: 35px; text-align: center; background-color: greenyellow">
+                    <a>@Model.NotaReview</a>
+                </div> 
+            }
+            else if (Model.NotaReview >= 90)
+            {
+                <div style="height: 24px; width: 35px; text-align: center; background-color: green">
+                    <a>@Model.NotaReview</a>
+                </div>
+            }
+            </div>
         </dd>
         }
         else 
@@ -42,7 +67,7 @@
         </dd>
         }
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DataReview)
+            <a>Data</a>
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DataReview)
@@ -67,8 +92,9 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="IdReview" />
         <input type="submit" value="Eliminar" class="btn btn-danger" />
-        @if (User.IsInRole("Gestor")) {
-            <a asp-action="Index">Lista de Reviews</a>
-        }
     </form>
+    @if (User.IsInRole("Gestor"))
+    {
+        <a style="border-top: 10px solid transparent" class="textoCor" asp-action="Index">Lista de Reviews</a>
+    }
 </div>

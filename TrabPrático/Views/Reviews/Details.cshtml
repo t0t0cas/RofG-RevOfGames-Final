@@ -29,18 +29,48 @@
         <dd class="col-sm-10" style="object-fit: fill; color: white">
             @Html.DisplayFor(model => model.Utilizador.Email)
         </dd>
+        @if (Model.NotaReview != 0)
+        {
         <dt class="col-sm-2" style="object-fit: fill; color: white">
             <a>Nota</a>
         </dt>
         <dd class="col-sm-10" style="object-fit: fill; color: white">
-            @Html.DisplayFor(model => model.NotaReview)
+            <div style="color: #272727">
+            @if (Model.NotaReview < 45)
+            {
+                <div style="height: 24px; width: 35px; text-align: center; background-color: red">
+                    <a>@Model.NotaReview</a>
+                </div> 
+            }
+            else if (Model.NotaReview >= 45 && Model.NotaReview < 75)
+            {
+                <div style="height: 24px; width: 35px; text-align: center; background-color: yellow">
+                    <a>@Model.NotaReview</a>
+                </div> 
+            }
+            else if (Model.NotaReview >= 75 && Model.NotaReview < 90)
+            {
+                <div style="height: 24px; width: 35px; text-align: center; background-color: greenyellow">
+                    <a>@Model.NotaReview</a>
+                </div> 
+            }
+            else if (Model.NotaReview >= 90)
+            {
+                <div style="height: 24px; width: 35px; text-align: center; background-color: green">
+                    <a>@Model.NotaReview</a>
+                </div>
+            }
+            </div>
         </dd>
+        }
+        @if(Model.NotaReview == 0){ 
         <dt class="col-sm-2" style="object-fit: fill; color: white">
             <a>Comentário</a>
         </dt>
         <dd class="col-sm-10" style="object-fit: fill; color: white">
             @Html.DisplayFor(model => model.Comentario)
         </dd>
+        }
         <dt class="col-sm-2" style="object-fit: fill; color: white">
             <a>Visivel</a>
         </dt>
@@ -57,6 +87,6 @@
 </div>
 
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.IdReview">Editar</a> |
-    <a asp-action="Index">Voltar á lista</a>
+    <a class="textoCor" asp-action="Edit" asp-route-id="@Model.IdReview">Editar</a>
+    <a class="textoCor" asp-action="Index">Voltar á lista</a>
 </div>
