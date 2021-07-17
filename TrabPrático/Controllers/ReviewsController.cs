@@ -80,7 +80,10 @@ namespace TrabPrático.Controllers
                 return NotFound();
             }
 
-            var review = await _context.Review.FindAsync(id);
+            var review = await _context.Review
+                .Include(r => r.Utilizador)
+                .FirstOrDefaultAsync(m => m.IdReview == id);
+
             if (review == null)
             {
                 return NotFound();

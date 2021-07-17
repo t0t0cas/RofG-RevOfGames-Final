@@ -8,85 +8,83 @@
     <img style=" width: 380px; height: 70px; object-fit:fill;" src="~/fotosjogos/logoEliminar.png"
          title="Eliminar" />
 </div>
-
+@if (User.IsInRole("Gestor") || Model.Utilizador.Email == User.Identity.Name)
+{
 <div>
     <hr style=" background-color: white" />
     <dl class="row" style="color:white">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             <a>Jogo</a>
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             <div>
                 <img style=" object-fit:fill;" src="~/fotosjogos/@Html.DisplayFor(model => model.Jogo.Imagem) "
                      width="150"
                      alt="Fotografia do @Html.DisplayFor(model => model.Jogo.Nome)"
                      title="@Html.DisplayFor(model => model.Jogo.Nome)" />
             </div>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Utilizador)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Utilizador.Email)
         </dd>
-        @if(Model.NotaReview != 0) 
-        { 
-        <dt class = "col-sm-2">
+        </dd>
+        @if (Model.NotaReview != 0)
+        {
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.NotaReview)
         </dt>
-        <dd class = "col-sm-10">
-            <div style="color: #272727">
-            @if (Model.NotaReview > 0 && Model.NotaReview < 45)
-            {
+            <dd class="col-sm-10">
+                <div style="color: #272727">
+                @if (Model.NotaReview > 0 && Model.NotaReview < 45)
+                {
                 <div style="height: 24px; width: 35px; text-align: center; background-color: red">
                     <a>@Model.NotaReview</a>
                 </div> 
-            }
-            else if (Model.NotaReview >= 45 && Model.NotaReview < 75)
-            {
+                }
+                else if (Model.NotaReview >= 45 && Model.NotaReview < 75)
+                {
                 <div style="height: 24px; width: 35px; text-align: center; background-color: yellow">
                     <a>@Model.NotaReview</a>
                 </div> 
-            }
-            else if (Model.NotaReview >= 75 && Model.NotaReview < 90)
-            {
+                }
+                else if (Model.NotaReview >= 75 && Model.NotaReview < 90)
+                {
                 <div style="height: 24px; width: 35px; text-align: center; background-color: greenyellow">
                     <a>@Model.NotaReview</a>
                 </div> 
-            }
-            else if (Model.NotaReview >= 90)
-            {
+                }
+                else if (Model.NotaReview >= 90)
+                {
                 <div style="height: 24px; width: 35px; text-align: center; background-color: green">
                     <a>@Model.NotaReview</a>
                 </div>
-            }
+                }
             </div>
-        </dd>
+        </dd> 
         }
-        else 
-        { 
-        <dt class = "col-sm-2">
+        else
+        {
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Comentario)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Comentario)
         </dd>
         }
-        <dt class = "col-sm-2">
-            <a>Data</a>
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DataReview)
-        </dd>
-        @if(User.IsInRole("Gestor"))
-        { 
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Visivel)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Visivel)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Utilizador)
+        <dt class="col-sm-2">
+            <a>Data</a>
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Utilizador.Email)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataReview)
         </dd>
-        }
     </dl>
     
     <form asp-action="Delete">
@@ -98,3 +96,4 @@
         <a style="border-top: 10px solid transparent" class="textoCor" asp-action="Index">Lista de Reviews</a>
     }
 </div>
+}

@@ -32,9 +32,8 @@
         </tr>
     </thead>
     <tbody>
-
-        @foreach (var item in Model)
-        {
+@foreach (var item in Model)
+{
 <tr style="color: white">
     <td>
         <a style="cursor:pointer" onclick="location.href = '@Url.Action("Details","Jogos", new { id = item.Jogo.IdJogo})'">
