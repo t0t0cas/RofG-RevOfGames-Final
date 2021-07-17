@@ -40,7 +40,8 @@ namespace TrabPrático.Controllers.API
                                          NomeJogo = j.Nome,
                                          ImagemFoto = j.Imagem,
                                          NotaJogo = j.Nota,
-                                         DescricaoJogo = j.Descricao})
+                                         DescricaoJogo = j.Descricao,
+                                         LojaFK = j.LojaFK})
                                  .OrderBy(j=>j.IdJogo)
                                  .ToListAsync();
             return listaJogos;
@@ -102,7 +103,7 @@ namespace TrabPrático.Controllers.API
         [HttpPost]
         public async Task<ActionResult<Jogos>> PostJogos([FromForm]Jogos jogos, IFormFile UpFotografia)
         {
-
+            try { 
             jogos.Imagem = "";
             string localizacao = _caminho.WebRootPath;
             var nomeDaImagem = Path.Combine(localizacao, "fotosJogos", UpFotografia.FileName);
@@ -115,6 +116,11 @@ namespace TrabPrático.Controllers.API
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetJogos", new { id = jogos.IdJogo }, jogos);
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
         }
 
         // DELETE: api/JogosAPI/5

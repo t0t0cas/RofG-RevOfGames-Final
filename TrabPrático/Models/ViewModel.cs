@@ -31,5 +31,10 @@ namespace TrabPrático.Models
         /// Descrição do Jogo
         /// </summary>
         public string DescricaoJogo { get; set; }
+
+        /// <summary>
+        /// FK da Loja 
+        /// </summary>
+        public int LojaFK { get; set; }
     }
 }
