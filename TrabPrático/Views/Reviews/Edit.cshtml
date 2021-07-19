@@ -48,13 +48,21 @@
                     <input hidden asp-for="DataReview" class="form-control" />
                     <span hidden asp-validation-for="DataReview" class="text-danger"></span>
                 </div>
-                @if (Model.NotaReview == 0 || User.IsInRole("Gestor"))
+                @if (Model.NotaReview == 0 || (Model.NotaReview == 0 && User.IsInRole("Gestor")))
                 {
-                    <div class="form-group form-check">
-                        <label style="color:white" class="form-check-label">
-                            <input class="form-check-input" asp-for="Visivel" /> Visível
-                        </label>
-                    </div>
+                <div class="form-group form-check">
+                    <label style="color:white" class="form-check-label">
+                        <input class="form-check-input" asp-for="Visivel" /> Visível
+                    </label>
+                </div>
+                }
+                else
+                {
+                <div class="form-group form-check">
+                    <label hidden style="color:white" class="form-check-label">
+                        <input hidden class="form-check-input" asp-for="Visivel" /> Visível
+                    </label>
+                </div>
                 }
                 <div class="form-group">
                     <label hidden asp-for="UtilizadorFK" class="control-label"></label>
